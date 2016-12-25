@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pga.game">
+	<select id="selectAllGame" resultType="java.util.HashMap">
+		SELECT game_id, game_name FROM pga_game 
+	</select>
+
+	<select id="selectGame" resultType="java.util.HashMap">
+		SELECT game_id, game_name FROM pga_game
+		WHERE game_id = #{gameId}
+	</select>
+	<insert id="insertGame" useGeneratedKeys="true" keyProperty="gameId">
+		INSERT INTO pga_game (game_name) values (#{gameName})
+	</insert>
+</mapper>

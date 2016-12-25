@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pga.group">
+	<select id="selectGroupMembers" resultType="java.util.HashMap">
+		SELECT game_id, group_members FROM pga_group_member WHERE game_id = #{gameId} 
+	</select>
+
+	<insert id="insertGroupMembers">
+		INSERT INTO pga_group_member (game_id, group_members) values (#{gameId}, #{groupMembers})
+	</insert>
+	
+	<delete id="deleteGroupMembers">
+		DELETE FROM pga_group_member WHERE game_id = #{gameId}
+	</delete>
+</mapper>
