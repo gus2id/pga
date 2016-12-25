@@ -24,6 +24,9 @@ ul{
 #groupContainer div {
 	height: 150px;
 }
+a {
+	text-decoration: none;
+}
 		</style>
 		<link rel="stylesheet" href="/static/js/message-box/messagebox.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
@@ -280,8 +283,18 @@ ul{
 				return false;
 			});
 			
+			$('.addMemberLayerClose').click(function() {
+				$('#addMemberLayer').hide();
+				return false;
+			});
 			$('.mealTicketTemplateClose').click(function() {
 				$('#mealTicketTemplate').hide();
+			});
+			
+			$('#addMember').click(function() {
+				$('#addMemberLayer').center();
+				$('#addMemberLayer').show();
+				return false;
 			});
 			
 			function addGroup(savedGroupName) {
@@ -360,6 +373,18 @@ ul{
 	</table>
 	개수 : <input type="number" name="count" /><input type="button" value="확인" /> 
 </div>
+
+<div id="addMemberLayer" style="background-color: white;display:none;border:1px solid black;">
+<a style="float:right;padding-right:5px;" href="#" class="addMemberLayerClose">x</a><br>
+클럽명 <input type="text" name="memberName"><br>
+이름 <input type="text" name="memberName"><br>
+생일 이름 <input type="text" name="memberName"><br> 
+전화번호  <input type="text" name="memberName"><br>
+주소  <input type="text" name="memberName"><br>
+지역  <input type="text" name="memberName"><br>
+성별  <input type="radio" name="gender" value="M">남 <input type="radio" name="gender" value="W">여<br>
+</div>
+
 <div style="height:300px;overflow:auto;" class="groupContainer">
 <h3>선택된 명단</h3>
 <ul id="selected-member">
@@ -374,7 +399,7 @@ ul{
 	<option value="${item.region}">${item.region}</option>
 	</c:forEach>
 </select>
-<h3>전체명단</h3>
+<h3>전체명단 <a href="#" style="text-decoration: none;" id="addMember">+</a></h3>
 <ul id="all-member">
 	<c:forEach var="item" items="${member}" varStatus="status">
 	<li><span class="userSeq" style="display:none;" userSeq="${item.member_seq}">${item.member_seq}</span>${item.name} | ${item.club_name} | ${item.region} <span class="remove" style="display:none;">x</span> <input type="button" class="btnAdd" value="Add"></input></li>
