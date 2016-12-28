@@ -18,4 +18,9 @@
 	<insert id="insertGroupMembers">
 		INSERT INTO pga_group_member (game_id, group_members) values (#{gameId}, #{groupMembers})
 	</insert>
+	
+	<insert id="insertUser">
+		INSERT INTO pga_members (club_name, position, name, birth, telephone, address, region) 
+		VALUES (#{clubName}, #{position}, #{name}, #{birth}, #{telephone}, #{address}, #{region})
+	</insert>
 </mapper>

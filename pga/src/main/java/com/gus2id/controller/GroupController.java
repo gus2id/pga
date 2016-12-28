@@ -131,4 +131,10 @@ public class GroupController {
 		modelMap.addAttribute("allMember", sqlSession.selectList("pga.user.selectUser", params));
 		return "printTable";
 	}
+	
+	@RequestMapping("/user/add")
+	public void addUser(@RequestParam Map<String, Object> map) {
+		sqlSession.insert("pga.user,insertUser", map);
+	}
+	
 }

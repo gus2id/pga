@@ -297,6 +297,13 @@ a {
 				return false;
 			});
 			
+			$('#btnRegistUser').click(function() {
+				$.ajax({
+					url: '/user/add',
+					data: $('form').serialize() 
+				});	
+			})
+			
 			function addGroup(savedGroupName) {
 				var groupNameFirst = $('#groupTypeCount').val().split("");
 				var number = "";
@@ -383,6 +390,7 @@ a {
 주소  <input type="text" name="memberName"><br>
 지역  <input type="text" name="memberName"><br>
 성별  <input type="radio" name="gender" value="M">남 <input type="radio" name="gender" value="W">여<br>
+<div style="width: 100%;text-align:center;"><input type="button" id="btnRegistUser" value="등록">&nbsp;<input type="button" id="btnCancel" value="취소"></div>
 </div>
 
 <div style="height:300px;overflow:auto;" class="groupContainer">
