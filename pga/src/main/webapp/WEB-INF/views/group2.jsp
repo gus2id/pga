@@ -300,7 +300,14 @@ a {
 			$('#btnRegistUser').click(function() {
 				$.ajax({
 					url: '/user/add',
-					data: $('form').serialize() 
+					data: $('form').serialize()
+					success: function() {
+						$.MessageBox({
+							  message  : "등록되었습니다."
+						});
+						// <li><span class="userSeq" style="display:none;" userSeq="${item.member_seq}">${item.member_seq}</span>${item.name} | ${item.club_name} | ${item.region} <span class="remove" style="display:none;">x</span> <input type="button" class="btnAdd" value="Add"></input></li>
+						// $('#all-member').append();
+					}
 				});	
 			})
 			
@@ -383,13 +390,30 @@ a {
 
 <div id="addMemberLayer" style="background-color: white;display:none;border:1px solid black;">
 <a style="float:right;padding-right:5px;" href="#" class="addMemberLayerClose">x</a><br>
-클럽명 <input type="text" name="memberName"><br>
-이름 <input type="text" name="memberName"><br>
-생일 이름 <input type="text" name="memberName"><br> 
-전화번호  <input type="text" name="memberName"><br>
-주소  <input type="text" name="memberName"><br>
-지역  <input type="text" name="memberName"><br>
-성별  <input type="radio" name="gender" value="M">남 <input type="radio" name="gender" value="W">여<br>
+<table>
+<tr>
+<td>클럽명 </td><td><input type="text" name="clubName"></td>
+</tr>
+<tr>
+<td>이름</td><td><input type="text" name="memberName"></td>
+</tr>
+<tr>
+<td>생년월일(ex:820821)</td><td><input type="text" name="birth"></td>
+</tr>
+<tr>
+<td>전화번호</td><td><input type="text" name="telephone"></td>
+</tr>
+<tr>
+<td>주소</td><td><input type="text" name="address"></td>
+</tr>
+<tr>
+<td>지역(ex:대구)</td><td><input type="text" name="region"></td>
+</tr>
+<tr>
+<td>성별</td><td><input type="radio" name="gender" value="M">남 <input type="radio" name="gender" value="W">여</td>
+</td>
+</tr>
+</table>
 <div style="width: 100%;text-align:center;"><input type="button" id="btnRegistUser" value="등록">&nbsp;<input type="button" id="btnCancel" value="취소"></div>
 </div>
 
