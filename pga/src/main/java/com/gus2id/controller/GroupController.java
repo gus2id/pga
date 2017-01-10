@@ -134,7 +134,15 @@ public class GroupController {
 	
 	@RequestMapping("/user/add")
 	public void addUser(@RequestParam Map<String, Object> map) {
-		sqlSession.insert("pga.user,insertUser", map);
+		@SuppressWarnings("unused")
+		Integer memberSeq = sqlSession.selectOne("pga.user.selectMaxMemberSeq");
+		map.put("memberSeq", memberSeq);
+		sqlSession.insert("pga.user.insertUser", map);
+	}
+	
+	@RequestMapping("/user/disabled")
+	public void userDisabled(Integer userSeq) {
+		sqlSession.update("pga.user.updateDisableUser", userSeq);
 	}
 	
 }

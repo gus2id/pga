@@ -7,6 +7,12 @@
 		<if test="region != null">
 		AND region = #{region}
 		</if>
+		AND enabled = 'Y'
+	</select>
+	
+	<select id="selectMaxMemberSeq" resultType="java.lang.Integer">
+		SELECT max(member_seq) + 1 AS memberSeq
+		FROM pga_members
 	</select>
 	
 	<select id="selectRegion" resultType="java.util.HashMap">
@@ -20,7 +26,11 @@
 	</insert>
 	
 	<insert id="insertUser">
-		INSERT INTO pga_members (club_name, position, name, birth, telephone, address, region) 
-		VALUES (#{clubName}, #{position}, #{name}, #{birth}, #{telephone}, #{address}, #{region})
+		INSERT INTO pga_members (member_seq, club_name, position, name, birth, telephone, address, region, enabled) 
+		VALUES (#{memberSeq}, #{clubName}, #{position}, #{name}, #{birth}, #{telephone}, #{address}, #{region}, 'Y')
 	</insert>
+	
+	<update id="updateDisableUser">
+		UPDATE pga_members SET enabled = 'N' WHERE member_seq = #{userSeq}
+	</update>
 </mapper>

@@ -271,7 +271,20 @@ a {
 			});
 			$('#addGroup').click(addGroup);
 			
-			$('body').on('click', '.remove', function() {
+			$('#all-member').on('click', '.remove', function() {
+				var $this = $(this).parents('li');
+				$.ajax({url: '/user/disabled', data: {userSeq: $this.find('.userSeq').text()}
+					, complete: function() {
+						$.MessageBox({
+							  message  : "삭제되었습니다."
+						}).done(function(data){
+							$this.remove();
+						});	
+					}
+				});
+			});
+			
+			$('#selected-member').on('click', '.remove', function() {
 				var $li = $(this).parents('li');
 				$li.find('.btnAdd').show();
 				$li.find('.remove').hide();
@@ -300,16 +313,21 @@ a {
 			$('#btnRegistUser').click(function() {
 				$.ajax({
 					url: '/user/add',
-					data: $('form').serialize()
+					data: $('form').serialize(),
 					success: function() {
 						$.MessageBox({
 							  message  : "등록되었습니다."
 						});
+						$('#addMemberLayer').hide();
 						// <li><span class="userSeq" style="display:none;" userSeq="${item.member_seq}">${item.member_seq}</span>${item.name} | ${item.club_name} | ${item.region} <span class="remove" style="display:none;">x</span> <input type="button" class="btnAdd" value="Add"></input></li>
 						// $('#all-member').append();
 					}
 				});	
-			})
+			});
+			
+			$('#btnCancel').click(function() {
+				$('#addMemberLayer').hide();
+			});
 			
 			function addGroup(savedGroupName) {
 				var groupNameFirst = $('#groupTypeCount').val().split("");
@@ -395,7 +413,7 @@ a {
 <td>클럽명 </td><td><input type="text" name="clubName"></td>
 </tr>
 <tr>
-<td>이름</td><td><input type="text" name="memberName"></td>
+<td>이름</td><td><input type="text" name="name"></td>
 </tr>
 <tr>
 <td>생년월일(ex:820821)</td><td><input type="text" name="birth"></td>
@@ -407,7 +425,7 @@ a {
 <td>주소</td><td><input type="text" name="address"></td>
 </tr>
 <tr>
-<td>지역(ex:대구)</td><td><input type="text" name="region"></td>
+<td>지역(ex:북구)</td><td><input type="text" name="region"></td>
 </tr>
 <tr>
 <td>성별</td><td><input type="radio" name="gender" value="M">남 <input type="radio" name="gender" value="W">여</td>
@@ -434,7 +452,7 @@ a {
 <h3>전체명단 <a href="#" style="text-decoration: none;" id="addMember">+</a></h3>
 <ul id="all-member">
 	<c:forEach var="item" items="${member}" varStatus="status">
-	<li><span class="userSeq" style="display:none;" userSeq="${item.member_seq}">${item.member_seq}</span>${item.name} | ${item.club_name} | ${item.region} <span class="remove" style="display:none;">x</span> <input type="button" class="btnAdd" value="Add"></input></li>
+	<li><span class="userSeq" style="display:none;" userSeq="${item.member_seq}">${item.member_seq}</span>${item.name} | ${item.club_name} | ${item.region} <span class="remove">x</span> <input type="button" class="btnAdd" value="Add"></input></li>
 	</c:forEach>
 </ul>
 </div>
