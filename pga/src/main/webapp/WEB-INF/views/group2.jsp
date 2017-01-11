@@ -253,7 +253,6 @@ a {
 								var addedUserSeq = $(this).find('.userSeq').text();
 								$('#all-member span.userSeq').each(function() {
 									if ($(this).text() == addedUserSeq) {
-										console.log('removed')
 										$(this).parents('li').remove();
 									}
 								});
@@ -272,16 +271,18 @@ a {
 			$('#addGroup').click(addGroup);
 			
 			$('#all-member').on('click', '.remove', function() {
-				var $this = $(this).parents('li');
-				$.ajax({url: '/user/disabled', data: {userSeq: $this.find('.userSeq').text()}
-					, complete: function() {
-						$.MessageBox({
-							  message  : "삭제되었습니다."
-						}).done(function(data){
-							$this.remove();
-						});	
-					}
-				});
+				if (confirm('삭제하시겠습니까?')) {
+					var $this = $(this).parents('li');
+					$.ajax({url: '/user/disabled', data: {userSeq: $this.find('.userSeq').text()}
+						, complete: function() {
+							$.MessageBox({
+								  message  : "삭제되었습니다."
+							}).done(function(data){
+								$this.remove();
+							});	
+						}
+					});
+				}
 			});
 			
 			$('#selected-member').on('click', '.remove', function() {
@@ -449,7 +450,7 @@ a {
 	<option value="${item.region}">${item.region}</option>
 	</c:forEach>
 </select>
-<h3>전체명단 <a href="#" style="text-decoration: none;" id="addMember">+</a></h3>
+<h3>전체명단 <a href="#" style="text-decoration: none;" id="addMember">+</a><a href="#" id="restoreMember" style="text-decoration: none;">↖</a></h3>
 <ul id="all-member">
 	<c:forEach var="item" items="${member}" varStatus="status">
 	<li><span class="userSeq" style="display:none;" userSeq="${item.member_seq}">${item.member_seq}</span>${item.name} | ${item.club_name} | ${item.region} <span class="remove">x</span> <input type="button" class="btnAdd" value="Add"></input></li>

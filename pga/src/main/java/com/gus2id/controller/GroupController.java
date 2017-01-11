@@ -141,8 +141,12 @@ public class GroupController {
 	}
 	
 	@RequestMapping("/user/disabled")
-	public void userDisabled(Integer userSeq) {
+	public void userDisable(Integer userSeq) {
 		sqlSession.update("pga.user.updateDisableUser", userSeq);
 	}
 	
+	@RequestMapping("/user/enabled")
+	public void userEnable(Integer userSeq) {
+		sqlSession.update("pga.user.updateEnableUser", userSeq);
+	}
 }

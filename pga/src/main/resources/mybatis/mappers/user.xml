@@ -10,6 +10,11 @@
 		AND enabled = 'Y'
 	</select>
 	
+	<select id="selectDisableUser">
+		SELECT * FROM pga_members
+		WHERE  enabled = 'N'
+	</select>
+	
 	<select id="selectMaxMemberSeq" resultType="java.lang.Integer">
 		SELECT max(member_seq) + 1 AS memberSeq
 		FROM pga_members
@@ -29,6 +34,10 @@
 		INSERT INTO pga_members (member_seq, club_name, position, name, birth, telephone, address, region, enabled) 
 		VALUES (#{memberSeq}, #{clubName}, #{position}, #{name}, #{birth}, #{telephone}, #{address}, #{region}, 'Y')
 	</insert>
+	
+	<update id="updateEnableUser">
+		UPDATE pga_members SET enabled = 'Y' WHERE member_seq = #{userSeq}
+	</update>
 	
 	<update id="updateDisableUser">
 		UPDATE pga_members SET enabled = 'N' WHERE member_seq = #{userSeq}
