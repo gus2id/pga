@@ -285,6 +285,10 @@ a {
 				}
 			});
 			
+			$('.restoreMemberPopupClose').click(function() {
+				$(this).parents('div').hide();
+			});
+			
 			$('#selected-member').on('click', '.remove', function() {
 				var $li = $(this).parents('li');
 				$li.find('.btnAdd').show();
@@ -328,6 +332,28 @@ a {
 			
 			$('#btnCancel').click(function() {
 				$('#addMemberLayer').hide();
+			});
+			
+			$('#restoreMember').click(function() {
+				$.getJSON('/user/getDisabledMember', function(result) {
+					console.log(result.disabledMember);
+					$('#restoreMemberPopup ul').empty();
+					for (var index = 0, count = result.disabledMember.length; index < count; index++) {
+						var item = result.disabledMember[index];
+						$('#restoreMemberPopup ul').append('<li><span class="userSeq" style="display:none;" userSeq="'+ item.member_seq+'">'+item.member_seq+'</span>'+item.name+' | '+item.club_name+'| '+item.region+' <span class="remove" style="display:none;">x</span> <input type="button" class="btnRestore" value="복구"></input></li>');	
+					}
+					$('#restoreMemberPopup').center();
+					$('#restoreMemberPopup').show();					
+				});
+			});
+			$('#restoreMemberPopup').on('click', '.btnRestore', function() {
+				var $li = $(this).parents('li');
+				console.log($li.find('.userSeq').text())
+				$.ajax({url: '/user/enabled', data: {userSeq:$li.find('.userSeq').text()}, success: function() {
+					$li.find('input[type=button]').remove();
+					$li.append('<input type="button" class="btnAdd" value="Add">');
+					$('#all-member').append($li);
+				}});
 			});
 			
 			function addGroup(savedGroupName) {
@@ -456,6 +482,10 @@ a {
 	<li><span class="userSeq" style="display:none;" userSeq="${item.member_seq}">${item.member_seq}</span>${item.name} | ${item.club_name} | ${item.region} <span class="remove">x</span> <input type="button" class="btnAdd" value="Add"></input></li>
 	</c:forEach>
 </ul>
+</div>
+<div id="restoreMemberPopup" style="display:none;position:absolute;background-color:white;overflow:auto;height:300px; border: 1px solid black;">
+<a style="float:right;padding-right:5px;" href="#" class="restoreMemberPopupClose">x</a><br>
+	<ul></ul>
 </div>
 <div style="clear: left;">
 <select name="groupTypeCount" id="groupTypeCount">

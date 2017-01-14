@@ -141,17 +141,22 @@ public class GroupController {
 	}
 	
 	@RequestMapping("/user/disabled")
+	@ResponseBody
 	public void userDisable(Integer userSeq) {
 		sqlSession.update("pga.user.updateDisableUser", userSeq);
 	}
 	
 	@RequestMapping("/user/enabled")
+	@ResponseBody
 	public void userEnable(Integer userSeq) {
 		sqlSession.update("pga.user.updateEnableUser", userSeq);
 	}
 	
 	@RequestMapping("/user/getDisabledMember")
-	public void getDisabledMember(ModelMap modelMap) {
-		modelMap.put("disabledMember", sqlSession.selectList("pga.user.selectDisableMember"));
+	@ResponseBody
+	public Map<String, Object> getDisabledMember(ModelMap modelMap) {
+		Map<String, Object> result = new HashMap<>();
+		result.put("disabledMember", sqlSession.selectList("pga.user.selectDisableMember"));
+		return result;
 	}
 }

@@ -10,7 +10,7 @@
 		AND enabled = 'Y'
 	</select>
 	
-	<select id="selectDisableUser">
+	<select id="selectDisableMember" resultType="java.util.HashMap">
 		SELECT * FROM pga_members
 		WHERE  enabled = 'N'
 	</select>
