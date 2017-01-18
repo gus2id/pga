@@ -162,9 +162,9 @@ a {
 				$('#selected-member .remove').show();
 				// $li.remove();
 			});
-			$('[name=region]').change(function() {
+			$('[name=region], #clubName').change(function() {
 				$.ajax({url: '/group/search', 
-					data: {region: $(this).val()},				
+					data: {region: $('select[name=region]').val(), clubName: $('#clubName').val()},				
 					success: function(result) {
 						$('#all-member').empty();
 						for (var index = 0, count = result.member.length; index < count; index++) {
@@ -474,6 +474,12 @@ a {
 	<option value="">- 전체 -</option>
 	<c:forEach var="item" items="${region}">
 	<option value="${item.region}">${item.region}</option>
+	</c:forEach>
+</select>
+<select name="clubName" id="clubName">
+	<option value="">- 전체 -</option>
+	<c:forEach var="item" items="${clubNames}">
+	<option value="${item.club_name}">${item.club_name}</option>
 	</c:forEach>
 </select>
 <h3>전체명단 <a href="#" style="text-decoration: none;" id="addMember">+</a><a href="#" id="restoreMember" style="text-decoration: none;">↖</a></h3>

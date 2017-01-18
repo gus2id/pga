@@ -41,9 +41,11 @@ public class GroupController {
 		List<Map<String, Object>> searchRegion = sqlSession.selectList("pga.user.selectRegion");
 		List<Map<String, Object>> result = sqlSession.selectList("pga.user.selectUser", params);
 		List<Map<String, Object>> games = sqlSession.selectList("pga.game.selectAllGame");
+		List<Map<String, Object>> clubNames = sqlSession.selectList("pga.user.selectAllClub");
 		modelMap.addAttribute("member", result);
 		modelMap.addAttribute("games", games);
 		modelMap.addAttribute("region", searchRegion);
+		modelMap.addAttribute("clubNames", clubNames);
 		return "group2";
 	}
 	
@@ -67,13 +69,26 @@ public class GroupController {
 		
 		return modelMap;
 	}
+	
+	@RequestMapping("/ajax/allclub")
+	@ResponseBody
+	public Map<String, Object> ajaxAllclub() {
+		List<Map<String, Object>> clubNames = sqlSession.selectList("pga.user.selectAllClub");
+		Map<String, Object> result = new HashMap<>();
+		result.put("clubs", clubNames);
+		return result;
+	}
+	
 	@RequestMapping("/group/search")
 	@ResponseBody
-	public Map<String, Object> search(String region, ModelMap modelMap) {
+	public Map<String, Object> search(String region, String clubName, ModelMap modelMap) {
 		modelMap.clear();
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (!StringUtils.isEmpty(region)) {
 			params.put("region", region);
+		}
+		if (!StringUtils.isEmpty(clubName)) {
+			params.put("clubName", clubName);
 		}
 		List<Map<String, Object>> result = sqlSession.selectList("pga.user.selectUser", params);
 		Map<String, Object> resultMap = new HashMap<String, Object>();

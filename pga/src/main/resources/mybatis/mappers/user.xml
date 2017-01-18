@@ -7,6 +7,9 @@
 		<if test="region != null">
 		AND region = #{region}
 		</if>
+		<if test="clubName != null">
+		AND club_name = #{clubName}
+		</if>
 		AND enabled = 'Y'
 	</select>
 	
@@ -20,10 +23,16 @@
 		FROM pga_members
 	</select>
 	
+	<select id="selectAllClub" resultType="java.util.HashMap">
+		SELECT DISTINCT club_name FROM pga_members
+		WHERE enabled = 'Y'
+	</select>
+	
 	<select id="selectRegion" resultType="java.util.HashMap">
 		SELECT DISTINCT region
 		FROM pga_members
 		WHERE region != ''
+		AND enabled = 'Y'
 	</select>
 	
 	<insert id="insertGroupMembers">
