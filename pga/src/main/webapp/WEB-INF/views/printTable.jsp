@@ -73,12 +73,13 @@ $(function() {
 
 		<c:set var="eachMember" value="${fn:split(item, ',')}" />
 		<c:forEach var="member" items="${eachMember}">
-			<c:set var="member" value="${fn:replace(member, 'game_id=\d', '')}" />
+			<c:set var="member" value="${fn:substring(member, 0, fn:indexOf(member, 'game_id'))}" />
 			<c:set var="onlyMember" value="${fn:split(member, '/')}" />
-			document.write('${member}');
 			<c:if test="${fn:length(onlyMember) > 1}">
 				<c:set var="groupName" value="${fn:replace(onlyMember[0], '{group_members=', '')}" />
 				<c:set var="selectMember" value="${onlyMember[1]}" />
+				$('#group${groupName}').append('<tr><td>${allMember[selectMember].member_name}</td></tr>');
+				//document.write('${groupName} ${allMember[selectMember]}<br>')
 			</c:if>
 			<c:if test="${fn:length(onlyMember) == 1}">
 				<c:set var="selectMember" value="${onlyMember[0]}" />

@@ -143,7 +143,7 @@ public class GroupController {
 		params.put("gameId", gameId);
 		Map<String, Object> groupMembers = sqlSession.selectOne("pga.group.selectGroupMembers", params);
 		modelMap.addAttribute("members", groupMembers);
-		modelMap.addAttribute("allMember", sqlSession.selectList("pga.user.selectUser", params));
+		modelMap.addAttribute("allMember", sqlSession.selectMap("pga.user.selectUser", params, "member_seq"));
 		return "printTable";
 	}
 	
