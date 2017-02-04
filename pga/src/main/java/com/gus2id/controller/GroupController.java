@@ -142,6 +142,12 @@ public class GroupController {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("gameId", gameId);
 		Map<String, Object> groupMembers = sqlSession.selectOne("pga.group.selectGroupMembers", params);
+		String groupMembersString = (String) groupMembers.get("group_members");
+		String[] memberByGroup = groupMembersString.split(";");
+		List<String> members = new ArrayList<String>();
+		for (String groupMember : memberByGroup) {
+			
+		}
 		modelMap.addAttribute("members", groupMembers);
 		modelMap.addAttribute("allMember", sqlSession.selectMap("pga.user.selectUser", params, "member_seq"));
 		return "printTable";
