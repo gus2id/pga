@@ -75,11 +75,16 @@ $(function() {
 		<c:forEach var="member" items="${eachMember}">
 			<c:set var="member" value="${fn:substring(member, 0, fn:indexOf(member, 'game_id'))}" />
 			<c:set var="onlyMember" value="${fn:split(member, '/')}" />
+		console.log('${onlyMember}');
 			<c:if test="${fn:length(onlyMember) > 1}">
 				<c:set var="groupName" value="${fn:replace(onlyMember[0], '{group_members=', '')}" />
 				<c:set var="selectMember" value="${onlyMember[1]}" />
-				$('#group${groupName}').append('<tr><td>${allMember}${selectMember}</td></tr>');
-				//document.write('${groupName} ${allMember[selectMember]}<br>')
+				if ($('#group${groupName}').lenght > 0) {
+					$('#group${groupName}').append('<tr><td>${allMember[selectMember].name}</td></tr>');
+				} else {
+					$('body').append('<table style="border-collapse:collapse; border:1px gray solid;float:left;margin-left:10px;" id="group${groupName}">');
+					$('#group${groupName}').append('<tr><td>${allMember[selectMember].name}</td></tr>');
+				}
 			</c:if>
 			<c:if test="${fn:length(onlyMember) == 1}">
 				<c:set var="selectMember" value="${onlyMember[0]}" />
@@ -90,16 +95,5 @@ $(function() {
 });
 </script>
 	<body>
-<table style="border-collapse:collapse; border:1px gray solid;float:left" id="groupA">
-</table>
-
-<table style="border-collapse:collapse; border:1px gray solid;float:left;margin-left:10px;" id="groupB">
-</table>
-
-<table style="border-collapse:collapse; border:1px gray solid;float:left;margin-left:10px;" id="groupC">
-</table>
-
-<table style="border-collapse:collapse; border:1px gray solid;float:left;margin-left:10px;" id="groupD">
-</table>
 	</body>
 </html>
